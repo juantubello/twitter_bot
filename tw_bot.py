@@ -20,10 +20,12 @@ INTERVALO = 15
 while True:
 
  #Obtenemos las frases del archivo de frases
- with open ("frases.txt", "r") as myfile:
-    myfile.encode('utf-8').strip()
-    frases = myfile.readlines()
-
+# with open ("frases.txt", "r") as myfile:
+  #  myfile.encode('utf-8').strip()
+  #  frases = myfile.readlines()
+ myfile = open('frases.txt')
+ frases = myfile.readlines()
+           
  #Se genera un numero random el cual es utilizado como indice
  r = random.randint(0, 24)
  tweet = "@CamiMontielH " + frases[r]
