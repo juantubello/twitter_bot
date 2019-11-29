@@ -1,1 +1,2 @@
-worker: python twitter_bot/tw_bot.py
+while True:
+	print("I am working!")
