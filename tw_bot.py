@@ -14,7 +14,8 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
            
       #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
- INTERVALO = 60 * 60 * 6 #Twittea cada 6 horas.
+#INTERVALO = 60 * 60 * 6 #Twittea cada 6 horas.
+INTERVALO = 15
 
 while True:
 
