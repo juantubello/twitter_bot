@@ -2,6 +2,7 @@
 import tweepy
 import random
 import os
+import time
 
 CONSUMER_KEY = os.getenv('CONSUMER_KEY')
 CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
@@ -24,7 +25,7 @@ while True:
 
  #Se genera un numero random el cual es utilizado como indice
  r = random.randint(0, 24)
- tweet = "@CamiMontielH " + str(frases[r])
+ tweet = "@CamiMontielH " + frases[r]
 
 
  try:
