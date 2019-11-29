@@ -23,9 +23,8 @@ while True:
            
  #Se genera un numero random el cual es utilizado como indice
  r = random.randint(0, 24)
- #tweet = "@CamiMontielH " + frases[r]
- tweet = frases[r]
-           
+ tweet = "@CamiMontielH " + frases[r]
+
  #Twitteamos
  try:
      if api.update_status(tweet):
