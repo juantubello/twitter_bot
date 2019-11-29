@@ -19,8 +19,8 @@ INTERVALO = 15
 while True:
 
  #Obtenemos las frases del archivo de frases
- with open ("frases.txt", "r") as myfile:
-    frases = myfile.readlines()
+ with open ("frases.txt", "rb") as myfile:
+    frases = myfile.read()
 
  #Se genera un numero random el cual es utilizado como indice
  r = random.randint(0, 24)
