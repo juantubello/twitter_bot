@@ -14,16 +14,11 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET) 
 api = tweepy.API(auth)
            
-      #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
-#INTERVALO = 60 * 60 * 6 #Twittea cada 6 horas.
-INTERVALO = 15
+#Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
+INTERVALO = 60 * 60 * 6 #Twittea cada 6 horas.
 
 while True:
-
- #Obtenemos las frases del archivo de frases
-# with open ("frases.txt", "r") as myfile:
-  #  myfile.encode('utf-8').strip()
-  #  frases = myfile.readlines()
+           
  with codecs.open('frases.txt', encoding='utf-8', errors='ignore') as myfile:
     frases = myfile.readlines()
            
@@ -31,7 +26,7 @@ while True:
  r = random.randint(0, 24)
  tweet = "@CamiMontielH " + frases[r]
 
-
+ #Twitteamos
  try:
      if api.update_status(tweet):
          print("Twitteado")
