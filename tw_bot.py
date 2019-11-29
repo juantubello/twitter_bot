@@ -18,7 +18,7 @@ api = tweepy.API(auth)
 INTERVALO = 60 * 60 * 6 #Twittea cada 6 horas.
 
 while True:       
- with codecs.open('frases.txt', encoding='utf-8', errors='ignore') as myfile:
+ with codecs.open('frases.txt', encoding='ISO-8859-1', errors='ignore') as myfile:
     frases = myfile.readlines()
            
  #Se genera un numero random el cual es utilizado como indice
