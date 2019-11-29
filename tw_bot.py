@@ -3,6 +3,7 @@ import tweepy
 import random
 import os
 import time
+import codecs
 
 CONSUMER_KEY = os.getenv('CONSUMER_KEY')
 CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
@@ -23,8 +24,8 @@ while True:
 # with open ("frases.txt", "r") as myfile:
   #  myfile.encode('utf-8').strip()
   #  frases = myfile.readlines()
- myfile = open('frases.txt')
- frases = myfile.readlines()
+with codecs.open('frases.txt', encoding='utf-8') as myfile:
+    frases = myfile.readlines()
            
  #Se genera un numero random el cual es utilizado como indice
  r = random.randint(0, 24)
