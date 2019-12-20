@@ -18,6 +18,9 @@ flag_twitteado = False
 
 indiceDeUltimaFrase = 100
 
+#Id's twitteados
+twitted_ids = []
+
 #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
 INTERVALO = 60 * 10 #Responde cada 10 minutos.
 
@@ -44,14 +47,11 @@ while True:
          print("Tweet ID: ",replyIdStr, " propio")
          continue
 
-     #Valido no haber respondido previamente a ese tweet mediante el log .txt
-     log_file = open('IDlog.txt','r+') 
-     id_logs = log_file.readlines()
-     for tw_id in id_logs:
-         tw = tw_id.strip().split(',')
-         if replyIdStr == tw[-2]:
+     #Valido no haber respondido previamente a ese tweet
+         if replyIdStr == tw_id:
              print("Tweet ID: ", replyId, " ya respondido" )
              flag_twitteado = True
+             twitted_ids.append(tw_id)
 
      if not flag_twitteado:
          #Leeo las Quotes de Coscu
@@ -69,12 +69,10 @@ while True:
      #Twitteamos
      try:
        if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
-         log_file.writelines( (replyIdStr + ","))
-         log_file.close()
          print("Twitteado con éxito")
      #Manejo de excepciones 
      except tweepy.error.TweepError as e:
          print(e)
-
+         
  time.sleep(INTERVALO)
 
