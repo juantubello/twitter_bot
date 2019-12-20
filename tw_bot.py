@@ -48,10 +48,10 @@ while True:
          continue
 
      #Valido no haber respondido previamente a ese tweet
-         if replyIdStr == tw_id:
-             print("Tweet ID: ", replyId, " ya respondido" )
-             flag_twitteado = True
-             twitted_ids.append(tw_id)
+     if replyIdStr == tw_id:
+         print("Tweet ID: ", replyId, " ya respondido" )
+         flag_twitteado = True
+         twitted_ids.append(tw_id)
 
      if not flag_twitteado:
          #Leeo las Quotes de Coscu
@@ -59,20 +59,21 @@ while True:
              frases = myfile.readlines()
          myfile.close()      
 
-     #Genero un numero random para usarlo como indice en la lista de Quotes
-     r = random.randint(0, 18)
-     while(r == indiceDeUltimaFrase):
+         #Genero un numero random para usarlo como indice en la lista de Quotes
          r = random.randint(0, 18)
-     indiceDeUltimaFrase = r
-     tweet = "@" + username +" "+ frases[r]
+         while(r == indiceDeUltimaFrase):
+             r = random.randint(0, 18)
+         indiceDeUltimaFrase = r
+         tweet = "@" + username +" "+ frases[r]
      
-     #Twitteamos
-     try:
-       if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
-         print("Twitteado con éxito")
-     #Manejo de excepciones 
-     except tweepy.error.TweepError as e:
-         print(e)
+         #Twitteamos
+         try:
+         if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
+             print("Twitteado con éxito")
+          #Manejo de excepciones 
+         except tweepy.error.TweepError as e:
+             print(e)
          
  time.sleep(INTERVALO)
+
 
