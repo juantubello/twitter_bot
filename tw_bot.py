@@ -22,7 +22,7 @@ indiceDeUltimaFrase = 100
 twitted_ids = []
 
 #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
-INTERVALO = 60 * 10 #Responde cada 10 minutos.
+INTERVALO = 60 * 2 #Responde cada 10 minutos.
 
 while True:
 
@@ -49,6 +49,7 @@ while True:
 
      #Valido no haber respondido previamente a ese tweet
      for tw_id in twitted_ids:
+         print("logId: ", tw_id, "Nuevo id: ", replyIdStr)
          if replyIdStr == tw_id:
              print("Tweet ID: ", replyId, " ya respondido" )
              flag_twitteado = True
@@ -70,11 +71,12 @@ while True:
          #Twitteamos
          try:
              if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
-                  print("Twitteado con éxito")
+                  print("Twitteado con éxito Id:", replyId)
          #Manejo de excepciones 
          except tweepy.error.TweepError as e:
              print(e)
          
  time.sleep(INTERVALO)
+
 
 
