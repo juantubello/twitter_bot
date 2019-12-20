@@ -48,10 +48,11 @@ while True:
          continue
 
      #Valido no haber respondido previamente a ese tweet
-     if replyIdStr == tw_id:
-         print("Tweet ID: ", replyId, " ya respondido" )
-         flag_twitteado = True
-         twitted_ids.append(tw_id)
+     for tw_id in twitted_ids:
+         if replyIdStr == tw_id:
+             print("Tweet ID: ", replyId, " ya respondido" )
+             flag_twitteado = True
+             twitted_ids.append(replyIdStr)
 
      if not flag_twitteado:
          #Leeo las Quotes de Coscu
