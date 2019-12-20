@@ -68,9 +68,9 @@ while True:
      
          #Twitteamos
          try:
-         if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
-             print("Twitteado con éxito")
-          #Manejo de excepciones 
+             if api.update_status(status = tweet, in_reply_to_status_id = replyId) :
+                  print("Twitteado con éxito")
+         #Manejo de excepciones 
          except tweepy.error.TweepError as e:
              print(e)
          
