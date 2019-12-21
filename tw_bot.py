@@ -21,8 +21,7 @@ api = tweepy.API(auth)
 json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
 with open('gcreds.json', 'w') as fp:
     json.dump(json_creds, fp)
-#creds_dict["private_key"] = creds_dict["private_key"].replace("\\\\n", "\n")
-
+    
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
 creds = ServiceAccountCredentials.from_json_keyfile_name('gcreds.json', scope)
 client = gspread.authorize(creds)
@@ -34,7 +33,7 @@ sheet = client.open("CoscuBot-IdLog").sheet1
 flag_twitteado = False
 
 #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
-INTERVALO = 60 * 10  #Responde cada 10 minutos.
+INTERVALO = 60 * 5  #Responde cada 5 minutos.
 
 while True:
 
