@@ -20,7 +20,7 @@ api = tweepy.API(auth)
 #Completo las credenciales para interactuar con la API de google
 json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
 with open('gcreds.json', 'w') as fp:
-    json.dump(creds, fp)
+    json.dump(json_creds, fp)
 #creds_dict["private_key"] = creds_dict["private_key"].replace("\\\\n", "\n")
 
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
