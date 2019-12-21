@@ -1,2 +1,4 @@
 tweepy
 flask
+gspread 
+oauth2client
