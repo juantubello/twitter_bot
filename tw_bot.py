@@ -17,7 +17,7 @@ auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
 #Completo las credenciales para interactuar con la API de google
-json_creds = os.getenv("GOOGLE_SHEETS_CREDS_JSON")
+json_creds = os.getenv('GOOGLE_SHEETS_CREDS_JSON')
 creds_dict = json.loads(json_creds)
 creds_dict["private_key"] = creds_dict["private_key"].replace("\\\\n", "\n")
 
