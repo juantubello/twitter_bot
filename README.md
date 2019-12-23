@@ -80,5 +80,5 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
       
        70 | with codecs.open('YOUR_TXT.txt', encoding='ISO-8859-1', errors='ignore') as myfile:
        ```
-  - **FINALLY** to end [here](https://tweepy.readthedocs.io/en/latest/) you can find documentation for **tweepy** and [here](https://gspread.readthedocs.io/en/latest/) for
+  - **FINALLY** to end just run on your CMD `python yourBotScript.py` and its done! [here](https://tweepy.readthedocs.io/en/latest/) you can find documentation for **tweepy** and [here](https://gspread.readthedocs.io/en/latest/) for
     **gspread** to play and modify the bot as your wish! 
