@@ -73,9 +73,9 @@ while True:
 
          #Genero un numero random para usarlo como indice en la lista de Quotes
          ultimoNumeroRandom = int(sheet.cell(2, 3).value)
-         r = random.randint(0, 18)
+         r = random.randint(0, 30)
          while(r == ultimoNumeroRandom):
-             r = random.randint(0, 18)
+             r = random.randint(0, 30)
          sheet.update_acell('C2', r)
          tweetTotweet = "@" + username +" "+ frases[r]
      
