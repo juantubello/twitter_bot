@@ -33,7 +33,7 @@ sheet = client.open("CoscuBot-IdLog").sheet1
 flag_twitteado = False
 
 #Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
-INTERVALO = 60 * 5  #Responde cada 5 minutos.
+INTERVALO = 60 * 2  #Responde cada 2 minutos.
 
 while True:
 
