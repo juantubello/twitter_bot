@@ -85,7 +85,7 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
        creds = ServiceAccountCredentials.from_json_keyfile_name('gcreds.json', scope)
        client = gspread.authorize(creds)
         ```
-       convert the env variable  ```'GOOGLE_SHEETS_CREDS_JSON' ``` to JSON.
+       convert the env variable  ```'GOOGLE_SHEETS_CREDS_JSON'``` to JSON.
        
    -  Make sure that you write the correct name of your `.txt` and your `spreadsheet`
        ```
