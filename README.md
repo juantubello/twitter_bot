@@ -67,7 +67,7 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
      ACCESS_SECRET   = 'Your twitter access_secret'
      ```
      
-   -  To work locally lines 21 - 27 should be replaced with:
+   -  To work locally lines 21 - 27  of ```tw_bot.py``` file should be replaced with:
        ```
        #Completo las credenciales para interactuar con la API de google
        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
