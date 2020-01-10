@@ -67,13 +67,16 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
      ACCESS_SECRET   = 'Your twitter access_secret'
      ```
      
-   -  To work locally lines 21 - 27  of ```tw_bot.py``` file should be replaced with:
+   -  To work #locally lines 21 - 27  of ```tw_bot.py``` file should be replaced with:
        ```
        #Completo las credenciales para interactuar con la API de google
        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
        creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
        client = gspread.authorize(creds)
        ```
+       but if you want to deploy for example to heroku(like i did) the actual code contained in between lines 21 - 27 convert
+       the env variable to JSON
+       
    -  Make sure that you write the correct name of your `.txt` and your `spreadsheet`
        ```
        30 | sheet = client.open("YOUR_SPREADSHEET").sheet1
