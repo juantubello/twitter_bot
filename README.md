@@ -74,7 +74,7 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
        creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
        client = gspread.authorize(creds)
        ```
-       but if you want to deploy for example to Heroku (like i did) the actual code contained in between lines 21 - 27
+       but if you want to **deploy** for example to Heroku (like i did) the actual code contained in between lines 21 - 27
        ```
        #Completo las credenciales para interactuar con la API de google
        json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
