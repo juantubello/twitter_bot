@@ -1,4 +1,4 @@
-# twitter_bot
+# twitter_bot | [@CoscuBot](https://twitter.com/CoscuBot)
 I always wanted to know how bots work... and the best way to understand is to try! So this is how the **@CoscuBot** came to life! I researched some popular and not too complicated bots (since I had never programmed a bot before) and finally, I ended up with the idea of creating a bot that responds with random phrases every time you mention it.
 
 ## Functionality 
