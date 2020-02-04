@@ -52,7 +52,7 @@ while True:
      username = tweet.user.screen_name
 
      #Ignoro mis propios tweets
-     if username == 'CoscuBot':
+     if username == 'CoscuBot' or username == 'CogeNoCogeBOT' or username == 'BotReunion':
          print("Tweet ID: ",replyIdStr, " propio")
          continue
 
