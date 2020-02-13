@@ -51,7 +51,8 @@ while True:
      #Usuario que menciono al bot
      username = tweet.user.screen_name
 
-     #Ignoro mis propios tweets
+     #Ignoro mis propios tweets y tweets de bots que spamean mi cuenta, de manera
+     #que no se generen bucles infinitos que terminen en shadowban
      if username == 'CoscuBot' or username == 'CogeNoCogeBOT' or username == 'BotReunion':
          print("Tweet ID: ",replyIdStr, " propio")
          continue
