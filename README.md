@@ -2,7 +2,7 @@
 I always wanted to know how bots work... and the best way to understand is to try! So this is how the **@CoscuBot** came to life! I researched some popular and not too complicated bots (since I had never programmed a bot before) and finally, I ended up with the idea of creating a bot that responds with random phrases every time you mention it.
 
 ## Functionality 
-The functionality of this bot is to reply to the user who **@mentions** it with a random quote :trollface: from the Argentinian streamer 'Coscu' within 0 to 5 minutes.
+The functionality of this bot is to reply to the user who **@mentions** it with a random quote :trollface: from the Argentinian streamer 'Coscu' within 0 to 10 minutes.
 
 ## Features
 
