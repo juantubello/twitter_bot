@@ -45,7 +45,6 @@ def avoid_already_replied_id(db_data, reply_id):
 
     return already_replied
 
-
 def avoid_tweets_from_users(current_user, users_to_avoid, reply_id):
     """
     This function avoid tweets from certain users, to prevent shadowban
@@ -58,7 +57,6 @@ def avoid_tweets_from_users(current_user, users_to_avoid, reply_id):
    
     return avoid_tweet
     
-
 def reply_to_tweet(tweet_to_tweet, reply_id):
     """
     This function replies with a tweet to a tweet id passed by parameter
@@ -158,6 +156,3 @@ while True:
          update_excel_db(tweet_to_tweet, reply_id_str)
 
  time.sleep(INTERVAL)
-
-
-
