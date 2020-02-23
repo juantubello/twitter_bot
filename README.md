@@ -59,39 +59,7 @@ The functionality of this bot is to reply to the user who **@mentions** it with 
  - If you got here, copy the `tw_bot.py` that has the source code for the bot, also in order to work locally on your machine
    you will need to create a `.txt file` for example `quotes.txt` in the project folder and fill it with quotes or just text that you want to tweet...
    
-   - You need to adjust this with:
-     ```
-     CONSUMER_KEY    = 'Your twitter consumer_key'
-     CONSUMER_SECRET = 'Your twitter consumer_secret'
-     ACCESS_KEY      = 'Your twitter access_key'
-     ACCESS_SECRET   = 'Your twitter access_secret'
-     ```
-     
-   -  To work **locally** lines 21 - 27  of ```tw_bot.py``` file should be replaced with:
-       ```
-       #Completo las credenciales para interactuar con la API de google
-       scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
-       creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
-       client = gspread.authorize(creds)
-       ```
-       but if you want to **deploy** for example to Heroku (like i did) the actual code contained in between lines 21 - 27
-       ```
-       #Completo las credenciales para interactuar con la API de google
-       json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
-       with open('gcreds.json', 'w') as fp:
-       json.dump(json_creds, fp)
-    
-       scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
-       creds = ServiceAccountCredentials.from_json_keyfile_name('gcreds.json', scope)
-       client = gspread.authorize(creds)
-        ```
-       convert the env variable  ```'GOOGLE_SHEETS_CREDS_JSON'``` to JSON.
-       
-   -  Make sure that you write the correct name of your `.txt` and your `spreadsheet`
-       ```
-       30 | sheet = client.open("YOUR_SPREADSHEET").sheet1
-      
-       70 | with codecs.open('YOUR_TXT.txt', encoding='ISO-8859-1', errors='ignore') as myfile:
-       ```
+- Coming soon
+
   - **FINALLY** to end just run on your CMD `python yourBotScript.py` and its done! [here](https://tweepy.readthedocs.io/en/latest/) you can find documentation for **tweepy** and [here](https://gspread.readthedocs.io/en/latest/) for
     **gspread** to play and modify the bot as your wish! 
