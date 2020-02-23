@@ -34,7 +34,7 @@ def avoid_already_replied_id(db_data, reply_id):
 
     for tw_id in db_ids:
         if reply_id == tw_id:
-             print("Tweet ID: ", reply_id, " ya respondido" )
+             print("Tweet ID: ", reply_id, " already replied" )
              already_replied = True
 
     return already_replied
@@ -57,7 +57,7 @@ def reply_to_tweet(tweet_to_tweet, reply_id):
     """
     try:
          if api.update_status(status = tweet_to_tweet, in_reply_to_status_id = reply_id) :
-             print("Twitteado con éxito Id: ", reply_id)
+             print("ID: ", reply_id, "tweeted successfuly")
     except tweepy.error.TweepError as e:
          print(e)
 
