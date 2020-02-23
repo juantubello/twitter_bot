@@ -7,91 +7,149 @@ import gspread
 import json
 from oauth2client.service_account import ServiceAccountCredentials
 
-#Completo las credenciales para interactuar con la API de tweepy
-CONSUMER_KEY = os.getenv('CONSUMER_KEY')
-CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
-ACCESS_KEY = os.getenv('ACCESS_KEY')
-ACCESS_SECRET = os.getenv('ACCESS_SECRET')
+def auth_in_tweepy(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY, ACCESS_SECRET):
 
-auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET) 
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET) 
-api = tweepy.API(auth)
+    auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET) 
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET) 
+    api = tweepy.API(auth)
 
-#Completo las credenciales para interactuar con la API de google
-json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
-with open('gcreds.json', 'w') as fp:
-    json.dump(json_creds, fp)
+    return api
+
+def auth_in_gdrive():
     
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Agrego un Endpoint para que funcione
-creds = ServiceAccountCredentials.from_json_keyfile_name('gcreds.json', scope)
-client = gspread.authorize(creds)
+    json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
+    with open('gcreds.json', 'w') as fp:
+         json.dump(json_creds, fp)
 
-#Abro el archivo correspondiente al log
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #Add Endpoint to make it work
+    creds = ServiceAccountCredentials.from_json_keyfile_name('gcreds.json', scope)
+    client = gspread.authorize(creds)
+
+    return client
+
+def avoid_already_replied_id(db_data, reply_id):
+
+    already_replied = False
+    db_ids = db_data[1:]
+
+    for tw_id in db_ids:
+        if reply_id == tw_id:
+             print("Tweet ID: ", reply_id, " ya respondido" )
+             already_replied = True
+
+    return already_replied
+
+
+def avoid_tweets_from_users(current_user, users_to_avoid, reply_id):
+
+    avoid_tweet = False
+
+    if current_user in users_to_avoid:
+         print("Tweet ID: ", reply_id , "is from user", current_user, " | AVOIDED")
+         avoid_tweet = True
+   
+    return avoid_tweet
+    
+
+def reply_to_tweet(tweet_to_tweet, reply_id):
+    """
+    This function replies with a tweet to a tweet id passed by parameter
+    """
+    try:
+         if api.update_status(status = tweet_to_tweet, in_reply_to_status_id = reply_id) :
+             print("Twitteado con éxito Id: ", reply_id)
+    except tweepy.error.TweepError as e:
+         print(e)
+
+def update_excel_db(tweet_to_tweet, reply_id):
+    """
+    This function updates the excel,adding one new row, used as a DataBase
+    """
+    row = [reply_id, tweet_to_tweet]
+    sheet.append_row(row)
+
+def get_file_data(file_name):
+    """
+    This function get all de data from a certain file passed by parameter
+    """
+    with codecs.open(file_name, encoding='ISO-8859-1', errors='ignore') as myfile:    
+        data = myfile.readlines()
+
+    myfile.close()   
+
+    return data
+
+def get_last_quote_index():
+    """
+    This function get last random number from DataBase used to make 
+    the last quote reply, in order to avoid duplicate status
+    """
+    return int(sheet.cell(2, 3).value)
+
+def generate_tweet_reply(quotes, reply_id, last_random_index):
+    """
+    This function a tweet  to reply 
+    """
+    r = random.randint(0, (len(quotes) - 1))
+
+    while(r == last_random_index):
+        r = random.randint(0, (len(quotes) - 1))
+
+    sheet.update_acell('C2', r)
+    tweet_to_tweet = "@" + username +" "+ quotes[r]
+
+    return tweet_to_tweet
+
+# Logic
+
+INTERVAL = 60 * 10 #Ten minutes interval
+
+#Creds to use Tweepy API
+CONSUMER_KEY    = os.getenv('CONSUMER_KEY')
+CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
+ACCESS_KEY      = os.getenv('ACCESS_KEY')
+ACCESS_SECRET   = os.getenv('ACCESS_SECRET')
+
+api = auth_in_tweepy(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY, ACCESS_SECRET)
+
+#Creds to use Google Drive API (db)
+client = auth_in_gdrive()
+
+avoid_users = ['CoscuBot', 'CogeNoCogeBOT', 'BotReunion']
+
 sheet = client.open("CoscuBot-IdLog").sheet1
-
-#Flag para identificar tweets twitteados
-flag_twitteado = False
-
-#Minutos * Segundos * (Cuantas veces se repite = horas de intervalo)
-INTERVALO = 60 * 10  #Responde cada 10 minutos.
 
 while True:
 
- #Obtengo los tweets correspondientes a "CoscuBot"
- busqueda = api.search("CoscuBot")
+ #Get all tweets that contains "CoscuBot"
+ twitter_data = api.search("CoscuBot")
 
- #Itero por cada tweet en especifico, obtenido de la busqueda anterior
- for tweet in busqueda:
+ for tweet in twitter_data:
 
-     flag_twitteado = False
- 
-     #Id del tweet en string
-     replyIdStr = tweet.id_str
+     #ID of the tweet that contains @CoscuBot TAG
+     reply_id_str = tweet.id_str
 
-     #Usuario que menciono al bot
+     #User who mentions @CoscuBot
      username = tweet.user.screen_name
 
-     #Ignoro mis propios tweets y tweets de bots que spamean mi cuenta, de manera
-     #que no se generen bucles infinitos que terminen en shadowban
-     if username == 'CoscuBot' or username == 'CogeNoCogeBOT' or username == 'BotReunion':
-         print("Tweet ID: ",replyIdStr, " propio")
+     if avoid_tweets_from_users(username,avoid_users,reply_id_str):
          continue
 
-     #Valido no haber respondido previamente a ese tweet
-     datos = sheet.col_values(1)
-     log_Ids = datos[1:]
+     db_data = sheet.col_values(1)
 
-     for tweet_id in log_Ids:
-         if replyIdStr == tweet_id:
-             print("Tweet ID: ", replyIdStr, " ya respondido" )
-             flag_twitteado = True
+     if not avoid_already_replied_id(db_data, reply_id_str):
 
-     if not flag_twitteado:
-         #Leeo las Quotes de Coscu
-         with codecs.open('coscuQuotes.txt', encoding='ISO-8859-1', errors='ignore') as myfile:
-             frases = myfile.readlines()
-         myfile.close()      
+         quotes = get_file_data('coscuQuotes.txt')
 
-         #Genero un numero random para usarlo como indice en la lista de Quotes
-         ultimoNumeroRandom = int(sheet.cell(2, 3).value)
-         r = random.randint(0, 31)
-         while(r == ultimoNumeroRandom):
-             r = random.randint(0, 31)
-         sheet.update_acell('C2', r)
-         tweetTotweet = "@" + username +" "+ frases[r]
-     
-         #Twitteamos
-         try:
-             if api.update_status(status = tweetTotweet, in_reply_to_status_id = replyIdStr) :
-                  print("Twitteado con éxito Id: ", replyIdStr)
-                  indexToInsert = len(datos) + 1
-                  row = [replyIdStr, tweetTotweet]
-                  sheet.append_row(row)
-         #Manejo de excepciones 
-         except tweepy.error.TweepError as e:
-             print(e)
-         
- time.sleep(INTERVALO)
+         last_index = get_last_quote_index()
+
+         tweet_to_tweet = generate_tweet_reply(quotes, reply_id_str, last_index)
+
+         reply_to_tweet(tweet_to_tweet, reply_id_str)
+
+         update_excel_db(tweet_to_tweet, reply_id_str)
+
+ time.sleep(INTERVAL)
 
 
 
