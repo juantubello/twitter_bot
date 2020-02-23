@@ -8,7 +8,9 @@ import json
 from oauth2client.service_account import ServiceAccountCredentials
 
 def auth_in_tweepy(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY, ACCESS_SECRET):
-
+    """
+    This function logs into TWEEPY API in order to tweet from our BOT user (@CoscuBot)
+    """
     auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET) 
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET) 
     api = tweepy.API(auth)
@@ -16,7 +18,9 @@ def auth_in_tweepy(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY, ACCESS_SECRET):
     return api
 
 def auth_in_gdrive():
-    
+    """
+    This function logs into DRIVE API in order to interact, in this case, with our DATABASE
+    """
     json_creds = json.loads(os.getenv('GOOGLE_SHEETS_CREDS_JSON'))
     with open('gcreds.json', 'w') as fp:
          json.dump(json_creds, fp)
@@ -28,7 +32,9 @@ def auth_in_gdrive():
     return client
 
 def avoid_already_replied_id(db_data, reply_id):
-
+    """
+    This function avoid tweets already replied
+    """
     already_replied = False
     db_ids = db_data[1:]
 
@@ -41,7 +47,9 @@ def avoid_already_replied_id(db_data, reply_id):
 
 
 def avoid_tweets_from_users(current_user, users_to_avoid, reply_id):
-
+    """
+    This function avoid tweets from certain users, to prevent shadowban
+    """
     avoid_tweet = False
 
     if current_user in users_to_avoid:
@@ -57,7 +65,7 @@ def reply_to_tweet(tweet_to_tweet, reply_id):
     """
     try:
          if api.update_status(status = tweet_to_tweet, in_reply_to_status_id = reply_id) :
-             print("ID: ", reply_id, "tweeted successfuly")
+             print("Tweet ID: ", reply_id, "tweeted successfuly")
     except tweepy.error.TweepError as e:
          print(e)
 
@@ -100,7 +108,7 @@ def generate_tweet_reply(quotes, reply_id, last_random_index):
 
     return tweet_to_tweet
 
-# Logic
+## Logic ##
 
 INTERVAL = 60 * 10 #Ten minutes interval
 
