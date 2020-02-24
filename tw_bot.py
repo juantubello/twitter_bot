@@ -94,7 +94,7 @@ def get_last_quote_index():
 
 def generate_tweet_reply(quotes, reply_id, last_random_index):
     """
-    This function a tweet  to reply 
+    This function generates a tweet to reply 
     """
     r = random.randint(0, (len(quotes) - 1))
 
