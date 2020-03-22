@@ -121,7 +121,7 @@ api = auth_in_tweepy(CONSUMER_KEY,CONSUMER_SECRET,ACCESS_KEY, ACCESS_SECRET)
 #Creds to use Google Drive API (db)
 client = auth_in_gdrive()
 
-avoid_users = ['CoscuBot', 'CogeNoCogeBOT', 'BotReunion']
+avoid_users = ['CoscuBot', 'CogeNoCogeBOT', 'BotReunion', 'FacuBanzasBOT']
 
 sheet = client.open("CoscuBot-IdLog").sheet1
 
